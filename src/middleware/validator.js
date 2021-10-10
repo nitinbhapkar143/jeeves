@@ -1,8 +1,8 @@
 const joi = require('joi');
 
 const signupObject = joi.object({
-    email: joi.string().required(),
-    password: joi.string().required()
+    email: joi.string().email({ tlds: { allow: false } }).required(),
+    password: joi.string().min(8).max(20).required()
 });
 
 exports.validateSignup = () => (req, res, next) => {

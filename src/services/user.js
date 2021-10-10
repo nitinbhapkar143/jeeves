@@ -22,3 +22,16 @@ exports.signup = async user => {
         throw err
     }
 }
+
+exports.login = async user => {
+    try{
+        const result = await userDataAccess.get(user.email);
+        if (!result || !result.length || !result[0].length) return { status: false, message: `Incorrect email or password.` }
+        const match = await hash.compare(user.password, result[0][0].password);
+        if (!match) return { status: false, message: `Incorrect email or password.` }
+        const token = jwt.sign({username: user.email, user_id: result[0][0].id }, process.env.JWT_SECRET);
+        return { status: true, token, message : "User logged in successfully." }
+    }catch(err){
+        throw err
+    }
+}

@@ -11,7 +11,7 @@ exports.add = async (email, hashed) => {
 
 exports.get = async (email) => {
     try {
-        return await mysql.executeQuery([`SELECT id FROM users WHERE email='${email}'`]);
+        return await mysql.executeQuery([`SELECT * FROM users WHERE email='${email}'`]);
     }catch(err){
         throw err;
     }

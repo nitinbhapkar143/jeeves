@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const validator = require("../middleware/validator")
 
-router.post('/signup', async (req, res, next) => {
+router.post('/records', validator.validateSignup(), async (req, res, next) => {
   try{    
   }catch(err){
     next(err, req, res, next);

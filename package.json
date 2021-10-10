@@ -4,7 +4,8 @@
   "private": true,
   "author": "Nitin Bhapkar",
   "scripts": {
-    "start": "node ./src/bin/www"
+    "start": "node ./src/bin/www",
+    "coverage": "nyc --reporter=html mocha"
   },
   "dependencies": {
     "dotenv": "^10.0.0",

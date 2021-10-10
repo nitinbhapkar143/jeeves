@@ -3,11 +3,17 @@
   "version": "0.0.1",
   "private": true,
   "author": "Nitin Bhapkar",
+  "apidoc": {
+    "title": "API Documentation",
+    "url": "http://localhost:4000"
+  },
   "scripts": {
     "start": "node ./src/bin/www",
-    "coverage": "nyc --reporter=html mocha"
+    "coverage": "nyc --reporter=html mocha",
+    "docs": "apidoc -i ./ -e node_modules -o ./doc/doc"
   },
   "dependencies": {
+    "apidoc": "^0.29.0",
     "dotenv": "^10.0.0",
     "express": "~4.16.1",
     "joi": "^17.4.2",

@@ -10,7 +10,12 @@ const topic = joi.object({
 });
 
 const post = joi.object({
-    text: joi.string().min(2).max(50).required()
+    text: joi.string().min(1).max(256).required()
+});
+
+const comment = joi.object({
+    text: joi.string().min(1).max(256).required(),
+    parent_id: joi.number(),
 });
 
 exports.validateSignup = () => (req, res, next) => {
@@ -33,6 +38,15 @@ exports.validateTopic = () => (req, res, next) => {
 
 exports.validatePost = () => (req, res, next) => {
     const { error } = post.validate(req.body);
+    if(!error) return next();
+    return res.status(400).json({
+        status: false,
+        msg: error.details[0].message,
+    });
+};
+
+exports.validateComment = () => (req, res, next) => {
+    const { error } = comment.validate(req.body);
     if(!error) return next();
     return res.status(400).json({
         status: false,

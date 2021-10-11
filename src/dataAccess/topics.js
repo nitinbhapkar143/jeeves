@@ -9,9 +9,17 @@ exports.add = async (name) => {
     }
 }
 
-exports.get = async (id) => {
+exports.getById = async (id) => {
     try {
         return await mysql.executeQuery([`SELECT * FROM topics WHERE id='${id}'`]);
+    }catch(err){
+        throw err;
+    }
+}
+
+exports.get = async (limit = Number.MAX_SAFE_INTEGER, offset = 0) => {
+    try {
+        return await mysql.executeQuery([`SELECT * FROM topics limit ${limit} offset ${offset}`]);
     }catch(err){
         throw err;
     }

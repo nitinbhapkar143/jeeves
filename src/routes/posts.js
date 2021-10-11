@@ -10,9 +10,10 @@ const postService = require("../services/posts");
  * @apiGroup Posts
  * @apiDescription Create Topic.
  * 
+ * @apiHeader {String} authorization                      Users unique token.
+ * 
  * @apiParam {String} name                                Mandatory topic name.
  *
- * 
  * @apiSuccess {Number} status                             Status of the api.
  * @apiSuccess {Object} topic                              Topic created.
  * @apiSuccess {String} message                            Message of the api.
@@ -28,5 +29,33 @@ router.post('/topic', validator.validateTopic(), async (req, res, next) => {
     throw err
   }
 });
+
+/**
+ * @api {get} /api/posts/topic?limit=:limit&offset=:offset Get Topics
+ * @apiVersion 0.0.1
+ * @apiName getTopic
+ * @apiGroup Posts
+ * @apiDescription Get Topic.
+ * 
+ * @apiHeader {String} authorization                      Users unique token.
+ * 
+ * @apiParam {Number} offset                               Page Number.
+ * @apiParam {Number} limit                               Page Size.
+ *
+ * @apiSuccess {Number} status                            Status of the api.
+ * @apiSuccess {Object} topics                            Topics.
+ * @apiSuccess {String} message                           Message of the api.
+ * 
+ */
+
+ router.get('/topic', async (req, res, next) => {
+    try{
+      const topics = await postService.getTopics(req.query);
+      return res.status(200).json(topics)
+    }catch(err){
+      next(err, req, res, next);
+      throw err
+    }
+  });
 
 module.exports = router;

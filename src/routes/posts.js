@@ -3,59 +3,32 @@ const router = express.Router();
 const validator = require("../middleware/validator")
 const postService = require("../services/posts");
 
+
 /**
- * @api {post} /api/posts/topic Create Topic
+ * @api {post} /api/topic/topicId/post Create Post
  * @apiVersion 0.0.1
- * @apiName createTopic
+ * @apiName createPost
  * @apiGroup Posts
- * @apiDescription Create Topic.
+ * @apiDescription Create Post.
  * 
  * @apiHeader {String} authorization                      Users unique token.
  * 
- * @apiParam {String} name                                Mandatory topic name.
- *
- * @apiSuccess {Number} status                             Status of the api.
- * @apiSuccess {Object} topic                              Topic created.
- * @apiSuccess {String} message                            Message of the api.
- * 
- */
-
-router.post('/topic', validator.validateTopic(), async (req, res, next) => {
-  try{
-    const topic = await postService.createTopic(req.body);
-    return res.status(200).json(topic)
-  }catch(err){
-    next(err, req, res, next);
-    throw err
-  }
-});
-
-/**
- * @api {get} /api/posts/topic?limit=:limit&offset=:offset Get Topics
- * @apiVersion 0.0.1
- * @apiName getTopic
- * @apiGroup Posts
- * @apiDescription Get Topic.
- * 
- * @apiHeader {String} authorization                      Users unique token.
- * 
- * @apiParam {Number} offset                               Page Number.
- * @apiParam {Number} limit                               Page Size.
+ * @apiParam {String} text                                Mandatory text.
  *
  * @apiSuccess {Number} status                            Status of the api.
- * @apiSuccess {Object} topics                            Topics.
+ * @apiSuccess {Object} post                              Post created.
  * @apiSuccess {String} message                           Message of the api.
  * 
  */
 
- router.get('/topic', async (req, res, next) => {
+ router.post('/:topicId/post', validator.validatePost(), async (req, res, next) => {
     try{
-      const topics = await postService.getTopics(req.query);
-      return res.status(200).json(topics)
+      const topic = await postService.createPost(req.user.user_id, req.params.topicId, req.body);
+      return res.status(200).json(topic)
     }catch(err){
       next(err, req, res, next);
       throw err
     }
-  });
+});
 
 module.exports = router;

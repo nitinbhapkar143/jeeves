@@ -22,7 +22,7 @@ exports.getTopics = async query => {
             status: false,
             message: `Something went wrong. Please try later.`
         };
-        return { status: true, message : `Topic created successfully.`, topics : response[0] };
+        return { status: true, message : `Topic fetched successfully.`, topics : response[0] };
     }catch(err){
         throw err
     }

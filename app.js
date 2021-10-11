@@ -12,6 +12,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/api', routes);
+app.use(express.static(__dirname+ '/coverage'));
+app.use(express.static(__dirname+ '/doc'));
 
 app.use(errorHandler);
 

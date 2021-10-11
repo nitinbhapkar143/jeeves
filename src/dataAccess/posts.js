@@ -16,3 +16,11 @@ exports.getById = async (id) => {
         throw err;
     }
 }
+
+exports.get = async (limit = Number.MAX_SAFE_INTEGER, offset = 0) => {
+    try {
+        return await mysql.executeQuery([`SELECT * FROM posts limit ${limit} offset ${offset}`]);
+    }catch(err){
+        throw err;
+    }
+}

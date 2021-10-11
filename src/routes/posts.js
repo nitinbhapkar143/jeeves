@@ -22,8 +22,33 @@ const postService = require("../services/posts");
  */
 
  router.post('/:topicId/post', validator.validatePost(), async (req, res, next) => {
+  try{
+    const topic = await postService.createPost(req.user.user_id, req.params.topicId, req.body);
+    return res.status(200).json(topic)
+  }catch(err){
+    next(err, req, res, next);
+    throw err
+  }
+});
+
+/**
+ * @api {get} /api/topic/post Get Post
+ * @apiVersion 0.0.1
+ * @apiName getPosts
+ * @apiGroup Posts
+ * @apiDescription Get Post.
+ * 
+ * @apiHeader {String} authorization                      Users unique token.
+ * 
+ * @apiSuccess {Number} status                            Status of the api.
+ * @apiSuccess {Object} posts                             Posts.
+ * @apiSuccess {String} message                           Message of the api.
+ * 
+ */
+
+ router.get('/post', async (req, res, next) => {
     try{
-      const topic = await postService.createPost(req.user.user_id, req.params.topicId, req.body);
+      const topic = await postService.getPosts(req.body);
       return res.status(200).json(topic)
     }catch(err){
       next(err, req, res, next);

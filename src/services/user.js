@@ -30,7 +30,7 @@ exports.login = async user => {
         const match = await hash.compare(user.password, result[0][0].password);
         if (!match) return { status: false, message: `Incorrect email or password.` }
         const token = jwt.sign({username: user.email, user_id: result[0][0].id }, process.env.JWT_SECRET);
-        return { status: true, token, message : "User logged in successfully." }
+        return { status: true, token, message : `User logged in successfully.` }
     }catch(err){
         throw err
     }

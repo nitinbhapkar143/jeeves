@@ -9,17 +9,17 @@ exports.createComment = async (userId, postId, comment) => {
         let full_slug = `${moment().format(`YYYYMMDDHHmmss`)}:${slug}`;
         if(comment.parent_id){
             const slug_info = await helperService.getSlugInfo(comment.parent_id);
-            if(!slug_info) return res.json({
+            if(!slug_info) return {
                 status: true,
                 message: `No Comment found with given id.`
-            })
+            }
             slug = `${slug_info.slug}/${slug}`;
             full_slug = `${slug_info.full_slug}/${full_slug}`;
         }
-        if (full_slug.length > 512) return res.json({
+        if (full_slug.length > 512) return {
             status: true,
             message: `Maximum nesting level reached.`
-        })
+        }
         const response = await commentsDataAccess.add(userId, postId, comment, slug, full_slug);
         if (!response || !response.length || !response[0].affectedRows) return {
             status: false,

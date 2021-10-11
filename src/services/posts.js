@@ -26,7 +26,7 @@ exports.getPosts = async query => {
         for(let post of response[0]){
             promises.push(getCommentsForPost(post, posts))
         }
-        await Promise.all(promises);
+        await Promise.allSettled(promises);
         return { status: true, message : `Posts fetched successfully.`, posts };
     }catch(err){
         throw err

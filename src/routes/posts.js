@@ -32,7 +32,7 @@ const postService = require("../services/posts");
 });
 
 /**
- * @api {get} /api/topic/post Get Post
+ * @api {get} /api/topic/post?limit=:limit&offset=:offset Get Post
  * @apiVersion 0.0.1
  * @apiName getPosts
  * @apiGroup Posts
@@ -48,7 +48,7 @@ const postService = require("../services/posts");
 
  router.get('/post', async (req, res, next) => {
     try{
-      const topic = await postService.getPosts(req.body);
+      const topic = await postService.getPosts(req.query);
       return res.status(200).json(topic)
     }catch(err){
       next(err, req, res, next);
